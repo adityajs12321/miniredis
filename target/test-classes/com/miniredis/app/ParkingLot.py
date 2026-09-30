@@ -2,6 +2,7 @@ from abc import abstractmethod
 from datetime import datetime
 import random
 import uuid
+from collections import deque
 
 class Vehicle:
     size = None
@@ -28,3 +29,15 @@ for i in range(2):
 print(parkingSpots)
 
 vehicles = [Car(), Car(), Motorcycle(), Truck()]
+
+queue = deque(vehicles)
+
+for i in range(len(parkingSpots)):
+    if queue:
+        vehicle = queue.popleft()
+        spot = parkingSpots[i]
+        for key in spot:
+            if spot[key]["Available"] and spot[key]["Size"] >= (1 if vehicle.size == "small" else 2 if vehicle.size == "medium" else 3):
+                spot[key]["Available"] = False
+                print(f"Parked {vehicle.__class__.__name__} at spot {key} on level {i // 10 + 1}")
+                break
