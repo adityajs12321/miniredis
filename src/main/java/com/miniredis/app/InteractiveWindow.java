@@ -7,25 +7,35 @@ import com.miniredis.app.cache.LRUCache;
 public class InteractiveWindow {
     public static void main(String[] args) {
         LRUCache<String, String> cache = new LRUCache<>(4);
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("MiniRedis REPL. Commands: get <key>, put <key> <value>, exit");
 
         while (true) {
-            Scanner scanner = new Scanner(System.in);
-            String str = scanner.toString();
-            String[] input = str.split(" ");
-
-            if (input[0] == "get") {
-                if cache
-                System.out.println(cache.get(input[1]));
+            System.out.print("> ");
+            if (!scanner.hasNextLine()) {
+                break;
             }
-            else if (input[1] == "put") {
+
+            String[] input = scanner.nextLine().trim().split("\\s+");
+            String command = input[0].toLowerCase();
+
+            if (command.equals("get") && input.length == 2) {
+                String value = cache.get(input[1]);
+                System.out.println(value == null ? "(nil)" : value);
+            }
+            else if (command.equals("put") && input.length == 3) {
                 cache.put(input[1], input[2]);
-                System.out.println("Inserted.");
+                System.out.println("OK");
+            }
+            else if (command.equals("exit")) {
+                break;
             }
             else {
-                System.out.println("sonion.");
+                System.out.println("Unknown command. Usage: get <key> | put <key> <value> | exit");
             }
-
-            scanner.close();
         }
+
+        scanner.close();
     }
 }
