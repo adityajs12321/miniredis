@@ -1,17 +1,17 @@
 # miniredis
 
-A Redis-compatible in-memory key-value server written in C++20, with support for the Redis
+A Redis-compatible in-memory key-value server written in C++, with support for the Redis
 wire protocol (RESP).
 
 ## Features
 
 - **RESP2 protocol**: incremental parser and encoder that handle partial reads and
   pipelined commands, with limits on bulk length, array length, line length and nesting
-  depth to guard against hostile input.
+  depth to guard against evil input.
 - **Commands**: `PING`, `GET`, `SET` (with `EX` / `PX`), `DEL`, `EXPIRE`, `TTL`.
 - **Networking**: `poll()`-based TCP server that hands requests to a fixed-size worker
   thread pool.
-- **LRU eviction**: O(1) LRU cache that evicts the least recently used key once the
+- **LRU eviction**: O(1) LRU cache that evicts the LRU key once the
   configured capacity is reached.
 - **Key expiration**: expired keys are dropped lazily when accessed and actively by a
   background reaper thread that walks a time-ordered expiry index.
@@ -22,7 +22,7 @@ wire protocol (RESP).
 
 Requirements:
 
-- A C++20 compiler (GCC 11+, Clang 14+ or Apple Clang 14+)
+- Clang or GCC
 - CMake 3.20+
 - A POSIX system (Linux or macOS)
 - GoogleTest needs internet on the first run
