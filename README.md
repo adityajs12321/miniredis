@@ -15,7 +15,6 @@ wire protocol (RESP).
   configured capacity is reached.
 - **Key expiration**: expired keys are dropped lazily when accessed and actively by a
   background reaper thread that walks a time-ordered expiry index.
-- **Graceful shutdown**: `SIGINT` / `SIGTERM` stop the server cleanly.
 - **Tested**: 113 GoogleTest cases covering the parser, store, reaper, thread pool,
   command dispatch and the TCP server.
 
@@ -26,7 +25,7 @@ Requirements:
 - A C++20 compiler (GCC 11+, Clang 14+ or Apple Clang 14+)
 - CMake 3.20+
 - A POSIX system (Linux or macOS)
-- Internet access on the first configure, to download GoogleTest
+- GoogleTest needs internet on the first run
 
 ```sh
 git clone https://github.com/adityajs12321/miniredis.git

@@ -8,3 +8,4 @@ compile_commands.json
 .vscode/
 graphify-out/
 miniredis.code-workspace
+target
